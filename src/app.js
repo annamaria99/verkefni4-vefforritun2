@@ -15,10 +15,27 @@ const {
 const app = express();
 const path = dirname(fileURLToPath(import.meta.url));
 
-app.use(express.static(join(path, '../public')));
+app.get('/', (req, res) => {
+  res.sendFile(join(path, '../index.html'));
+});
 
-// TODO setja upp proxy þjónustu
-// TODO birta index.html skjal
+app.use((req, res, next) => {
+  res.header(
+    'Access-Control-Allow-Origin', '*',
+  );
+  res.header(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, PATCH, DELETE',
+  );
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+  );
+  next();
+});
+
+app.use(express.static(join(path, '../public')));
+app.use('/proxy', proxyRouter);
 
 /**
  * Middleware sem sér um 404 villur.
