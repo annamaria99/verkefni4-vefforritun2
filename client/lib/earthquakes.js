@@ -1,5 +1,5 @@
 export async function fetchEarthquakes(type, period) {
-  const url = new URL(`http://localhost:3001/proxy?period=${period}&type=${type}`).href;
+  const url = new URL(`/proxy?period=${period}&type=${type}`, window.location).href;
   let result;
   try {
     result = await fetch(url);
