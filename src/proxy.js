@@ -15,7 +15,7 @@ const {
 } = process.env;
 
 async function getEarthquakes(req, res) {
-  const timer = timerStart();
+  const startTime = timerStart();
   const { type, period } = req.query;
   let data;
   try {
@@ -38,7 +38,7 @@ async function getEarthquakes(req, res) {
   } else {
     data = JSON.parse(data);
   }
-  const elapsed = timerEnd(timer);
+  const elapsed = timerEnd(startTime);
   res.json({ data, info: { cached, elapsed } });
 }
 
